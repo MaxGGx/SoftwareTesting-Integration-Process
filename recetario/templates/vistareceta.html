@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- favicon -->
+	  <link rel="icon" href="{% static '/assets/avatar.png' %}">
+    <title>&#611; Recipes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- bootstrap -->
+	  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    
+  </head>
+  <body>
+    <button type="button" class="burger" onclick="toggleSidebar()">
+      <img class="burger-avatar" src="{% static '/assets/avatar.png' %}" />
+      <span class="burger-icon"></span>
+    </button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+      <img class="sidebar-avatar" src="{% static '/assets/avatar.png' %}" />
+      <div class="sidebar-username">&#611; Recipes</div>
+      <div class="sidebar-role">Tu lugar de cocina</div>
+      <nav class="sidebar-menu">
+        <button type="button" id="verRecetas" onclick="location.href='/';">
+          <img src="{% static '/assets/book-open-solid.svg' %}" />
+          <span>Ver recetas</span>
+        </button>
+        
+        <button type="button"  id="anadirReceta" onclick="location.href='/add';">
+          <img src="{% static '/assets/file-circle-plus-solid.svg' %}" />
+          <span>Añadir receta</span>
+        </button>
+      </nav>
+    </aside>
+    
+
+    <h2>Ver recetas</h2>
+    <div class="container col-lg-8 offset-lg-1">
+      <img src="{{ receta.imagenReceta.url }}" class="img-fluid" alt="Responsive image">
+      <h3>{{ receta.nombreReceta }}</h3>
+      <h4>Por: {{ receta.autor }}</h4>
+      <h2 class="mt-20 mb-20">Ingredientes:</h2>
+      <ul class="list-group">
+        {% for ing in ingredientes %}
+          <li class="list-group-item" style="color:black">{{ ing }}</li>
+        {% endfor %}
+      </ul>
+      <h2 class="mt-20 mb-20">Preparacion:</h2>
+      <ul class="list-group">
+        {% for paso in pasos %}
+          <li class="list-group-item" style="color:black">{{ paso }}</li>
+        {% endfor %}
+      </ul>
+      <p class="mt-20">&nbsp;</p>
+      <a style="margin: top 20px;" href="/editreceta/{{ receta.id }}"><button id="editarReceta" type="submit" class="btn btn-secondary">Editar Receta</button></a>
+      <p class="mt-20">&nbsp;</p>
+      <a style="margin: top 20px;" href="/deletereceta/{{ receta.id }}"><button id="eliminarReceta" type="submit" class="btn btn-danger">Eliminar Receta</button></a>
+    </div>
+    <script type="text/javascript">
+      const toggleSidebar = () => document.body.classList.toggle("open");
+    </script>
+    <!-- bootstrap -->
+	  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

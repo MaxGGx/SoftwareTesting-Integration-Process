@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- favicon -->
+	  <link rel="icon" href="{% static '/assets/avatar.png' %}">
+    <title>&#611; Recipes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- bootstrap -->
+	  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    
+  </head>
+  <body>
+    <button type="button" class="burger" onclick="toggleSidebar()">
+      <img class="burger-avatar" src="{% static '/assets/avatar.png' %}" />
+      <span class="burger-icon"></span>
+    </button>
+    <div class="overlay"></div>
+    <aside class="sidebar">
+      <img class="sidebar-avatar" src="{% static '/assets/avatar.png' %}" />
+      <div class="sidebar-username">&#611; Recipes</div>
+      <div class="sidebar-role">Tu lugar de cocina</div>
+      <nav class="sidebar-menu">
+        <button type="button" id="verRecetas" onclick="location.href='/';">
+          <img src="{% static '/assets/book-open-solid.svg' %}" />
+          <span>Ver recetas</span>
+        </button>
+        <button id="anadirReceta" type="button" onclick="location.href='/add';">
+          <img src="{% static '/assets/file-circle-plus-solid.svg' %}" />
+          <span>Añadir receta</span>
+        </button>
+      </nav>
+    </aside>
+    
+
+    <h2>Añadir receta</h2>
+
+    
+      <div class="col-lg-5 offset-lg-1">
+        <div class="alert alert-success" style="text-align: center;" id="success-alert">
+          <strong>Receta agregada satisfactoriamente!</strong>
+        </div>
+        <div class="alert alert-danger" style="text-align: center;" id="failed-alert">
+          <strong>Receta no agregada: Verifique que pasos e ingredientes esten separados por línea</strong>
+        </div>
+        <div class="form-group">
+          <form method="post" enctype="multipart/form-data" id="post-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-secondary">Subir Receta</button>
+          </form>
+        </div>
+      </div>
+    <script type="text/javascript">
+      const toggleSidebar = () => document.body.classList.toggle("open");
+    </script>
+    <!-- jquery -->
+	  <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+    <!-- bootstrap -->
+	  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--Add receta js-->
+	  <script src="{% static 'js/recetaadd.js' %}"></script>
+  </body>
+  <script type="text/javascript">
+    $(document).on("submit", "#post-form", function(e){
+      e.preventDefault();
+      var formdata = new FormData(this)
+      if( !(document.getElementById("id_ingredientes").value.includes("\n")) || !(document.getElementById("id_pasos").value.includes("\n"))){
+        showAlert2()
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: "",
+          data:formdata,
+          success: function(response){
+            showAlert()
+            document.getElementById("post-form").reset()
+          },
+          cache: false,
+          contentType: false,
+          processData: false
+        })
+      }
+    })
+  </script>
+</html>
