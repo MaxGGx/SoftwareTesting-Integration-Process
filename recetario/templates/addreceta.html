@@ -43,7 +43,7 @@
     </aside>
     
 
-    <h2>Añadir receta</h2>
+    <h2 id="MENU_ADDRECETA">Añadir receta</h2>
 
     
       <div class="col-lg-5 offset-lg-1">
@@ -57,7 +57,7 @@
           <form method="post" enctype="multipart/form-data" id="post-form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-secondary">Subir Receta</button>
+            <button type="submit" class="btn btn-secondary" id="BOTON_ADD_RECETA">Subir Receta</button>
           </form>
         </div>
       </div>

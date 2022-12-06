@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django_jenkins',
 ]
 
+PROJECT_APPS=['mainApp']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
